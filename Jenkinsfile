@@ -1,34 +1,43 @@
 pipeline {
     agent any
 
-    // Build tools (Maven)
     tools {
         maven 'Maven'
     }
 
-    // Environment variables
     environment {
         VERSION = '1.0.0'
     }
 
-    stages {
+    // Parameters (added as requested)
+    parameters {
+        booleanParam(
+            name: 'executeTests',
+            defaultValue: true,
+            description: 'Run the Test stage?'
+        )
+    }
 
+    stages {
         stage('Build') {
             steps {
                 echo "Building version ${VERSION}"
-                bat 'mvn -version'      // Required for Windows
+                bat 'mvn -version'
             }
         }
 
         stage('Test') {
+            when {
+                expression { params.executeTests == true }
+            }
             steps {
-                echo "Testing version ${VERSION}"
+                echo "Running Tests because executeTests = true"
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying version ${VERSION}"
+                echo "Deploying..."
             }
         }
     }
