@@ -1,33 +1,14 @@
 pipeline {
     agent any
 
-    // Define environment variables
-    environment {
-        VERSION = "1.0.5"
-        NODE_ENV = "development"
-    }
-
-    // Define parameters for conditional stages
-    parameters {
-        booleanParam(
-            name: 'executeTests', 
-            defaultValue: true, 
-            description: 'Run the Test stage?'
-        )
-    }
-
     stages {
         stage('Build') {
             steps {
-                echo "Building version ${VERSION} in ${NODE_ENV} environment"
+                echo 'Building..'
             }
         }
 
         stage('Test') {
-            // Conditional execution
-            when {
-                expression { params.executeTests == true }
-            }
             steps {
                 echo 'Testing..'
             }
@@ -42,7 +23,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline finished — this runs after every build.'
+            echo 'Pipeline Completed'
         }
         success {
             echo 'Build succeeded!'
