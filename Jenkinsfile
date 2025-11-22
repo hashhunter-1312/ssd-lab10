@@ -20,4 +20,16 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo 'Pipeline finished — this runs after every build.'
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
 }
