@@ -1,15 +1,22 @@
 pipeline {
     agent any
 
-    // Add environment variables
+    // Build tools (Maven)
+    tools {
+        maven 'Maven'
+    }
+
+    // Environment variables
     environment {
         VERSION = '1.0.0'
     }
 
     stages {
+
         stage('Build') {
             steps {
                 echo "Building version ${VERSION}"
+                bat 'mvn -version'      // Required for Windows
             }
         }
 
