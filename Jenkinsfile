@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    // Define environment variables
+    environment {
+        VERSION = "1.0.5"
+        NODE_ENV = "development"
+    }
+
     // Define parameters for conditional stages
     parameters {
         booleanParam(
@@ -13,7 +19,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo "Building version ${VERSION} in ${NODE_ENV} environment"
             }
         }
 
